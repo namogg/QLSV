@@ -10,87 +10,87 @@ using QLSV.Models;
 
 namespace QLSV.Controllers
 {
-    public class FreshersController : Controller
+    public class ExperiencesController : Controller
     {
         private readonly QLSVContext _context;
 
-        public FreshersController(QLSVContext context)
+        public ExperiencesController(QLSVContext context)
         {
             _context = context;
         }
 
-        // GET: Freshers
+        // GET: Experiences
         public async Task<IActionResult> Index()
         {
-              return _context.Fresher != null ? 
-                          View(await _context.Fresher.ToListAsync()) :
-                          Problem("Entity set 'QLSVContext.Fresher'  is null.");
+              return _context.Experience != null ? 
+                          View(await _context.Experience.ToListAsync()) :
+                          Problem("Entity set 'QLSVContext.Experience'  is null.");
         }
 
-        // GET: Freshers/Details/5
+        // GET: Experiences/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Fresher == null)
+            if (id == null || _context.Experience == null)
             {
                 return NotFound();
             }
 
-            var fresher = await _context.Fresher
+            var experience = await _context.Experience
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
-            if (fresher == null)
+            if (experience == null)
             {
                 return NotFound();
             }
 
-            return View(fresher);
+            return View(experience);
         }
 
-        // GET: Freshers/Create
+        // GET: Experiences/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Freshers/Create
+        // POST: Experiences/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Graduation_rank,Education,Graduation_date,EmployeeId,Name,room,gender,adress,Birth")] Fresher fresher)
+        public async Task<IActionResult> Create([Bind("ExpInYear,ProSkill,EmployeeId,Name,room,gender,adress,Birth")] Experience experience)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(fresher);
+                _context.Add(experience);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(fresher);
+            return View(experience);
         }
 
-        // GET: Freshers/Edit/5
+        // GET: Experiences/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Fresher == null)
+            if (id == null || _context.Experience == null)
             {
                 return NotFound();
             }
 
-            var fresher = await _context.Fresher.FindAsync(id);
-            if (fresher == null)
+            var experience = await _context.Experience.FindAsync(id);
+            if (experience == null)
             {
                 return NotFound();
             }
-            return View(fresher);
+            return View(experience);
         }
 
-        // POST: Freshers/Edit/5
+        // POST: Experiences/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Graduation_rank,Education,Graduation_date,EmployeeId,Name,room,gender,adress,Birth")] Fresher fresher)
+        public async Task<IActionResult> Edit(int id, [Bind("ExpInYear,ProSkill,EmployeeId,Name,room,gender,adress,Birth")] Experience experience)
         {
-            if (id != fresher.EmployeeID)
+            if (id != experience.EmployeeID)
             {
                 return NotFound();
             }
@@ -99,12 +99,12 @@ namespace QLSV.Controllers
             {
                 try
                 {
-                    _context.Update(fresher);
+                    _context.Update(experience);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FresherExists(fresher.EmployeeID))
+                    if (!ExperienceExists(experience.EmployeeID))
                     {
                         return NotFound();
                     }
@@ -115,49 +115,49 @@ namespace QLSV.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(fresher);
+            return View(experience);
         }
 
-        // GET: Freshers/Delete/5
+        // GET: Experiences/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Fresher == null)
+            if (id == null || _context.Experience == null)
             {
                 return NotFound();
             }
 
-            var fresher = await _context.Fresher
+            var experience = await _context.Experience
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
-            if (fresher == null)
+            if (experience == null)
             {
                 return NotFound();
             }
 
-            return View(fresher);
+            return View(experience);
         }
 
-        // POST: Freshers/Delete/5
+        // POST: Experiences/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Fresher == null)
+            if (_context.Experience == null)
             {
-                return Problem("Entity set 'QLSVContext.Fresher'  is null.");
+                return Problem("Entity set 'QLSVContext.Experience'  is null.");
             }
-            var fresher = await _context.Fresher.FindAsync(id);
-            if (fresher != null)
+            var experience = await _context.Experience.FindAsync(id);
+            if (experience != null)
             {
-                _context.Fresher.Remove(fresher);
+                _context.Experience.Remove(experience);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FresherExists(int id)
+        private bool ExperienceExists(int id)
         {
-          return (_context.Fresher?.Any(e => e.EmployeeID == id)).GetValueOrDefault();
+          return (_context.Experience?.Any(e => e.EmployeeID == id)).GetValueOrDefault();
         }
     }
 }

@@ -9,12 +9,12 @@ builder.Services.AddDbContext<QLSVContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var app = builder.Build();
+var app = builder.Build();  
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
-    SeedData.Initialize(services);
+   // SeedData.Initialize(services);
 }
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

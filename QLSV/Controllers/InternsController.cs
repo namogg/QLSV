@@ -10,87 +10,87 @@ using QLSV.Models;
 
 namespace QLSV.Controllers
 {
-    public class FreshersController : Controller
+    public class InternsController : Controller
     {
         private readonly QLSVContext _context;
 
-        public FreshersController(QLSVContext context)
+        public InternsController(QLSVContext context)
         {
             _context = context;
         }
 
-        // GET: Freshers
+        // GET: Interns
         public async Task<IActionResult> Index()
         {
-              return _context.Fresher != null ? 
-                          View(await _context.Fresher.ToListAsync()) :
-                          Problem("Entity set 'QLSVContext.Fresher'  is null.");
+              return _context.Intern != null ? 
+                          View(await _context.Intern.ToListAsync()) :
+                          Problem("Entity set 'QLSVContext.Intern'  is null.");
         }
 
-        // GET: Freshers/Details/5
+        // GET: Interns/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Fresher == null)
+            if (id == null || _context.Intern == null)
             {
                 return NotFound();
             }
 
-            var fresher = await _context.Fresher
+            var intern = await _context.Intern
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
-            if (fresher == null)
+            if (intern == null)
             {
                 return NotFound();
             }
 
-            return View(fresher);
+            return View(intern);
         }
 
-        // GET: Freshers/Create
+        // GET: Interns/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Freshers/Create
+        // POST: Interns/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Graduation_rank,Education,Graduation_date,EmployeeId,Name,room,gender,adress,Birth")] Fresher fresher)
+        public async Task<IActionResult> Create([Bind("Majors,Semester,University_name,EmployeeId,Name,room,gender,adress,Birth")] Intern intern)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(fresher);
+                _context.Add(intern);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(fresher);
+            return View(intern);
         }
 
-        // GET: Freshers/Edit/5
+        // GET: Interns/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Fresher == null)
+            if (id == null || _context.Intern == null)
             {
                 return NotFound();
             }
 
-            var fresher = await _context.Fresher.FindAsync(id);
-            if (fresher == null)
+            var intern = await _context.Intern.FindAsync(id);
+            if (intern == null)
             {
                 return NotFound();
             }
-            return View(fresher);
+            return View(intern);
         }
 
-        // POST: Freshers/Edit/5
+        // POST: Interns/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Graduation_rank,Education,Graduation_date,EmployeeId,Name,room,gender,adress,Birth")] Fresher fresher)
+        public async Task<IActionResult> Edit(int id, [Bind("Majors,Semester,University_name,EmployeeId,Name,room,gender,adress,Birth")] Intern intern)
         {
-            if (id != fresher.EmployeeID)
+            if (id != intern.EmployeeID)
             {
                 return NotFound();
             }
@@ -99,12 +99,12 @@ namespace QLSV.Controllers
             {
                 try
                 {
-                    _context.Update(fresher);
+                    _context.Update(intern);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FresherExists(fresher.EmployeeID))
+                    if (!InternExists(intern.EmployeeID))
                     {
                         return NotFound();
                     }
@@ -115,49 +115,49 @@ namespace QLSV.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(fresher);
+            return View(intern);
         }
 
-        // GET: Freshers/Delete/5
+        // GET: Interns/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Fresher == null)
+            if (id == null || _context.Intern == null)
             {
                 return NotFound();
             }
 
-            var fresher = await _context.Fresher
+            var intern = await _context.Intern
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
-            if (fresher == null)
+            if (intern == null)
             {
                 return NotFound();
             }
 
-            return View(fresher);
+            return View(intern);
         }
 
-        // POST: Freshers/Delete/5
+        // POST: Interns/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Fresher == null)
+            if (_context.Intern == null)
             {
-                return Problem("Entity set 'QLSVContext.Fresher'  is null.");
+                return Problem("Entity set 'QLSVContext.Intern'  is null.");
             }
-            var fresher = await _context.Fresher.FindAsync(id);
-            if (fresher != null)
+            var intern = await _context.Intern.FindAsync(id);
+            if (intern != null)
             {
-                _context.Fresher.Remove(fresher);
+                _context.Intern.Remove(intern);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FresherExists(int id)
+        private bool InternExists(int id)
         {
-          return (_context.Fresher?.Any(e => e.EmployeeID == id)).GetValueOrDefault();
+          return (_context.Intern?.Any(e => e.EmployeeID == id)).GetValueOrDefault();
         }
     }
 }

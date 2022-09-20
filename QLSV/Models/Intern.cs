@@ -3,8 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System;
 namespace QLSV.Models
 {
-    public class Intern: Employee
-    {   [StringLength(30, MinimumLength = 1)]
+    public class Intern
+    {
+        public int InternId { get; set; }
+        [StringLength(30, MinimumLength = 1)]
         [Required]
         public string Majors { get; set; }
         [StringLength(30, MinimumLength = 1)]
@@ -13,5 +15,7 @@ namespace QLSV.Models
         [StringLength(20, MinimumLength = 1)]
         [Required]
         public string University_name { get; set; }
+        [ForeignKey("Employee")]
+        public int EmployeeID { get; set; }
     }
 }

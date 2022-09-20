@@ -10,87 +10,89 @@ using QLSV.Models;
 
 namespace QLSV.Controllers
 {
-    public class FreshersController : Controller
+    public class CertificatesController : Controller
     {
         private readonly QLSVContext _context;
 
-        public FreshersController(QLSVContext context)
+        public CertificatesController(QLSVContext context)
         {
             _context = context;
         }
 
-        // GET: Freshers
-        public async Task<IActionResult> Index()
+        // GET: Certificates
+        public async Task<IActionResult> Index() => _context.Certificate != null ?
+                          View(await _context.Certificate.ToListAsync()) :
+                          Problem("Entity set 'QLSVContext.Certificate'  is null.");
+
+        private ObjectResult View(object p)
         {
-              return _context.Fresher != null ? 
-                          View(await _context.Fresher.ToListAsync()) :
-                          Problem("Entity set 'QLSVContext.Fresher'  is null.");
+            throw new NotImplementedException();
         }
 
-        // GET: Freshers/Details/5
+        // GET: Certificates/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Fresher == null)
+            if (id == null || _context.Certificate == null)
             {
                 return NotFound();
             }
 
-            var fresher = await _context.Fresher
-                .FirstOrDefaultAsync(m => m.EmployeeID == id);
-            if (fresher == null)
+            var certificate = await _context.Certificate
+                .FirstOrDefaultAsync(m => m.CertificateID == id);
+            if (certificate == null)
             {
                 return NotFound();
             }
 
-            return View(fresher);
+            return View(certificate);
         }
 
-        // GET: Freshers/Create
+        // GET: Certificates/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Freshers/Create
+        // POST: Certificates/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Graduation_rank,Education,Graduation_date,EmployeeId,Name,room,gender,adress,Birth")] Fresher fresher)
+        public async Task<IActionResult> Create([Bind("CertificateID,CertificateName,CertificateRank,GraduationDate")] Certificate certificate)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(fresher);
+                _context.Add(certificate);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(fresher);
+            return View(certificate);
         }
 
-        // GET: Freshers/Edit/5
+        // GET: Certificates/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Fresher == null)
+            if (id == null || _context.Certificate == null)
             {
                 return NotFound();
             }
 
-            var fresher = await _context.Fresher.FindAsync(id);
-            if (fresher == null)
+            var certificate = await _context.Certificate.FindAsync(id);
+            if (certificate == null)
             {
                 return NotFound();
             }
-            return View(fresher);
+            return View(certificate);
         }
 
-        // POST: Freshers/Edit/5
+        // POST: Certificates/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Graduation_rank,Education,Graduation_date,EmployeeId,Name,room,gender,adress,Birth")] Fresher fresher)
+        public async Task<IActionResult> Edit(int id, [Bind("CertificateID,CertificateName,CertificateRank,GraduationDate")] Certificate certificate)
         {
-            if (id != fresher.EmployeeID)
+            if (id != certificate.CertificateID)
             {
                 return NotFound();
             }
@@ -99,12 +101,12 @@ namespace QLSV.Controllers
             {
                 try
                 {
-                    _context.Update(fresher);
+                    _context.Update(certificate);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FresherExists(fresher.EmployeeID))
+                    if (!CertificateExists(certificate.CertificateID))
                     {
                         return NotFound();
                     }
@@ -115,49 +117,49 @@ namespace QLSV.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(fresher);
+            return View(certificate);
         }
 
-        // GET: Freshers/Delete/5
+        // GET: Certificates/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Fresher == null)
+            if (id == null || _context.Certificate == null)
             {
                 return NotFound();
             }
 
-            var fresher = await _context.Fresher
-                .FirstOrDefaultAsync(m => m.EmployeeID == id);
-            if (fresher == null)
+            var certificate = await _context.Certificate
+                .FirstOrDefaultAsync(m => m.CertificateID == id);
+            if (certificate == null)
             {
                 return NotFound();
             }
 
-            return View(fresher);
+            return View(certificate);
         }
 
-        // POST: Freshers/Delete/5
+        // POST: Certificates/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Fresher == null)
+            if (_context.Certificate == null)
             {
-                return Problem("Entity set 'QLSVContext.Fresher'  is null.");
+                return Problem("Entity set 'QLSVContext.Certificate'  is null.");
             }
-            var fresher = await _context.Fresher.FindAsync(id);
-            if (fresher != null)
+            var certificate = await _context.Certificate.FindAsync(id);
+            if (certificate != null)
             {
-                _context.Fresher.Remove(fresher);
+                _context.Certificate.Remove(certificate);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FresherExists(int id)
+        private bool CertificateExists(int id)
         {
-          return (_context.Fresher?.Any(e => e.EmployeeID == id)).GetValueOrDefault();
+          return (_context.Certificate?.Any(e => e.CertificateID == id)).GetValueOrDefault();
         }
     }
 }
