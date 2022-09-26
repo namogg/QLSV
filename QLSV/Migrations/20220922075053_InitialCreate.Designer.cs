@@ -12,8 +12,8 @@ using QLSV.Data;
 namespace QLSV.Migrations
 {
     [DbContext(typeof(QLSVContext))]
-    [Migration("20220916101741_Data")]
-    partial class Data
+    [Migration("20220922075053_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,10 +42,15 @@ namespace QLSV.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<int>("EmployeeID")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("GraduationDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("CertificateID");
+
+                    b.HasIndex("EmployeeID");
 
                     b.ToTable("Certificate");
                 });
@@ -81,7 +86,7 @@ namespace QLSV.Migrations
 
                     b.HasKey("EmployeeId");
 
-                    b.ToTable("Employee", (string)null);
+                    b.ToTable("Employee");
                 });
 
             modelBuilder.Entity("QLSV.Models.Experience", b =>
@@ -104,6 +109,8 @@ namespace QLSV.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("ExperienceId");
+
+                    b.HasIndex("EmployeeID");
 
                     b.ToTable("Experience");
                 });
@@ -133,6 +140,8 @@ namespace QLSV.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.HasKey("FresherID");
+
+                    b.HasIndex("EmployeeID");
 
                     b.ToTable("Fresher");
                 });
@@ -165,7 +174,58 @@ namespace QLSV.Migrations
 
                     b.HasKey("InternId");
 
+                    b.HasIndex("EmployeeID");
+
                     b.ToTable("Intern");
+                });
+
+            modelBuilder.Entity("QLSV.Models.Certificate", b =>
+                {
+                    b.HasOne("QLSV.Models.Employee", "Employee")
+                        .WithMany("Certificates")
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("QLSV.Models.Experience", b =>
+                {
+                    b.HasOne("QLSV.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("QLSV.Models.Fresher", b =>
+                {
+                    b.HasOne("QLSV.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("QLSV.Models.Intern", b =>
+                {
+                    b.HasOne("QLSV.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("QLSV.Models.Employee", b =>
+                {
+                    b.Navigation("Certificates");
                 });
 #pragma warning restore 612, 618
         }

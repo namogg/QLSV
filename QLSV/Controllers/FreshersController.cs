@@ -56,7 +56,7 @@ namespace QLSV.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Graduation_rank,Education,Graduation_date,EmployeeId,Name,room,gender,adress,Birth")] Fresher fresher)
+        public async Task<IActionResult> Create([Bind("Graduation_rank,Education,Graduation_date,Name,room,gender,adress,Birth")] Fresher fresher,int ID)
         {
             if (ModelState.IsValid)
             {

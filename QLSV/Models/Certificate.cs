@@ -17,5 +17,7 @@ namespace QLSV.Models
         [Display(Name = "Graduation Date")]
         [DataType(DataType.Date)]
         public DateTime GraduationDate { get; set; }
+        public int EmployeeID { get; set; }
+        public Employee Employee { get; set; }
     }
 }

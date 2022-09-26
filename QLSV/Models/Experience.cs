@@ -6,6 +6,8 @@ namespace QLSV.Models
     
     public class Experience
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ExperienceId { get; set; }
         [Display(Name = "Years of experience")]
         public int ExpInYear { get; set; }
@@ -16,5 +18,6 @@ namespace QLSV.Models
 
         [ForeignKey("Employee")]
         public int EmployeeID { get; set; }
+        public Employee Employee { get; set; }
     }
 }

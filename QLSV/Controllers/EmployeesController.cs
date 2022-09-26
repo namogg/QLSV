@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLSV.Data;
 using QLSV.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace QLSV.Controllers
 {
@@ -53,7 +55,7 @@ namespace QLSV.Controllers
 
         // GET: Employees/Create
         public IActionResult Create()
-        {
+        {   
             return View();
         }
 
@@ -65,7 +67,8 @@ namespace QLSV.Controllers
         public async Task<IActionResult> Create([Bind("EmployeeId,Name,room,gender,adress,Birth")] Employee employee)
         {
             if (ModelState.IsValid)
-            {
+            {   
+
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -158,10 +161,13 @@ namespace QLSV.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
         private bool EmployeeExists(int id)
         {
           return (_context.Employee?.Any(e => e.EmployeeId == id)).GetValueOrDefault();
+        }
+        public IActionResult Choose()
+        {
+            return RedirectToAction("Index","ChooseType");
         }
     }
 }

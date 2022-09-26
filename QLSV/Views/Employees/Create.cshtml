@@ -1,11 +1,5 @@
 ﻿@model QLSV.Models.Employee
 
-@{
-    ViewData["Title"] = "Create";
-}
-
-<h1>Create</h1>
-
 <h4>Employee</h4>
 <hr />
 <div class="row">
@@ -38,30 +32,6 @@
                 <span asp-validation-for="Birth" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="EmployeeType">Choose employee type:</label>
-                  <input type="radio" id="EmployeeType" name="EmployeeType" value="Fresher" onclick="openForm()">
-                  <label for="fresher">Fresher</label><br>
-                  <input type="radio" id="EmployeeType" name="EmployeeType" value="Intern" onclick="closeForm()">
-                  <label for="Intern">Intern</label><br>
-                  <input type="radio" id="EmployeeType" name="EmployeeType" value="Experience" onclick="closeForm()">
-                  <label for="Experience">Experience</label>
-            </div>
-            <div class="form-popup" id="FresherInput">
-                <form action="/action_page.php" class="form-container">
-                
-              </form>
-            </div>
-
-            <script>
-            function openForm() {
-                document.getElementById("FresherInput").style.display = "block";
-            }
-
-            function closeForm() {
-                document.getElementById("FresherInput").style.display = "none";
-            }
-            </script>
-            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -72,6 +42,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

@@ -12,7 +12,7 @@ namespace QLSV.Data
             : base(options)
         {
         }
-        
+
         public DbSet<QLSV.Models.Employee> Employee { get; set; } = default!;
         public DbSet<QLSV.Models.Fresher>? Fresher { get; set; }
         public DbSet<QLSV.Models.Intern>? Intern { get; set; }

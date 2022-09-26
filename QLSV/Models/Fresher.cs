@@ -4,7 +4,9 @@ using System;
 namespace QLSV.Models
 {
     public class Fresher
-    {   
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FresherID { get; set; }
         [StringLength(10, MinimumLength = 1)]
         [Required]
@@ -17,6 +19,6 @@ namespace QLSV.Models
         public DateTime Graduation_date { get; set; }
         [ForeignKey("Employee")]
         public int EmployeeID { get; set; }
-
+        public Employee Employee { get; set; }
     }
 }

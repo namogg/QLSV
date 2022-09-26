@@ -1,0 +1,59 @@
+﻿@model QLSV.Models.Fresher
+
+<h4>Fresher</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Employee.Name" class="control-label"></label>
+                <input asp-for="Employee.Name" class="form-control" />
+                <span asp-validation-for="Employee.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Employee.room" class="control-label"></label>
+                <input asp-for="Employee.room" class="form-control" />
+                <span asp-validation-for="Employee.room" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Employee.gender" class="control-label"></label>
+                <input asp-for="Employee.gender" class="form-control" />
+                <span asp-validation-for="Employee.gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Employee.adress" class="control-label"></label>
+                <input asp-for="Employee.adress" class="form-control" />
+                <span asp-validation-for="Employee.adress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Employee.Birth" class="control-label"></label>
+                <input asp-for="Employee.Birth" class="form-control" />
+                <span asp-validation-for="Employee.Birth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Graduation_rank" class="control-label"></label>
+                <input asp-for="Graduation_rank" class="form-control" />
+                <span asp-validation-for="Graduation_rank" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Education" class="control-label"></label>
+                <input asp-for="Education" class="form-control" />
+                <span asp-validation-for="Education" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Graduation_date" class="control-label"></label>
+                <input asp-for="Graduation_date" class="form-control" />
+                <span asp-validation-for="Graduation_date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

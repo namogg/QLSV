@@ -1,0 +1,22 @@
+﻿@model QLSV.Controllers.ChooseType
+
+<h4>Which kind of employee are you</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index" method="get">
+            <label for="type" name="type">Choose your type</label>
+            <select name="type" id="lang">
+                <option value="Fresher">Fresher</option>
+                <option value="Intern">Intern</option>
+                <option value="Experience">Experience</option>
+            </select>
+            <input type="submit" value="Submit" class="btn btn-primary"/>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

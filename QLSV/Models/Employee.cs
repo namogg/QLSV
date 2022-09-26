@@ -5,6 +5,8 @@ namespace QLSV.Models
 {
     public class Employee
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EmployeeId { get; set; }
         [StringLength(60, MinimumLength = 1)]
         [Required]
@@ -19,6 +21,6 @@ namespace QLSV.Models
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
         public DateTime Birth { get; set; }
-
+        public List<Certificate> Certificates { get; set; }
     }
 }

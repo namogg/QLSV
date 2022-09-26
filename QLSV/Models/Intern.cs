@@ -5,6 +5,8 @@ namespace QLSV.Models
 {
     public class Intern
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int InternId { get; set; }
         [StringLength(30, MinimumLength = 1)]
         [Required]
@@ -17,5 +19,6 @@ namespace QLSV.Models
         public string University_name { get; set; }
         [ForeignKey("Employee")]
         public int EmployeeID { get; set; }
+        public Employee Employee { get; set; }
     }
 }
