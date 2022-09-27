@@ -19,5 +19,9 @@ namespace QLSV.Models
         public DateTime GraduationDate { get; set; }
         public int EmployeeID { get; set; }
         public Employee Employee { get; set; }
+        public Certificate()
+        {
+
+        }
     }
 }

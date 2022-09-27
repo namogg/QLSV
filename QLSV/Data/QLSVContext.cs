@@ -18,5 +18,6 @@ namespace QLSV.Data
         public DbSet<QLSV.Models.Intern>? Intern { get; set; }
         public DbSet<QLSV.Models.Experience>? Experience { get; set; }
         public DbSet<QLSV.Models.Certificate>? Certificate { get; set; }
+        public DbSet<QLSV.Models.FresherDTO> FresherDTO { get; set; }
     }
 }

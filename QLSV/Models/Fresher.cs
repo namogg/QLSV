@@ -20,5 +20,16 @@ namespace QLSV.Models
         [ForeignKey("Employee")]
         public int EmployeeID { get; set; }
         public Employee Employee { get; set; }
+        public Fresher()
+        {
+
+        }
+        public Fresher(FresherDTO fresherDTO)
+        {
+            this.Employee = new Employee(fresherDTO.Name, fresherDTO.room, fresherDTO.gender, fresherDTO.adress, fresherDTO.Birth);
+            this.Graduation_date = fresherDTO.Graduation_date;
+            this.Graduation_rank = fresherDTO.Graduation_rank;
+            this.Education = fresherDTO.Education;
+        }
     }
 }

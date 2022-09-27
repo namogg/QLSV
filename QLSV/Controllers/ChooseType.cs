@@ -11,7 +11,7 @@ namespace QLSV.Controllers
         {
             if (type == "Fresher")
             {
-                return RedirectToAction("Create","Freshers");
+                return RedirectToAction("Create","FresherDTO");
             }
             if (type == "Experience")
             {

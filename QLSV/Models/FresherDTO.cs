@@ -3,11 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System;
 namespace QLSV.Models
 {
-    public class Employee
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int EmployeeId { get; set; }
+    public class FresherDTO
+    {   [Key]
+        public int ID { get; set; }
         [StringLength(60, MinimumLength = 1)]
         [Required]
         public string Name { get; set; }
@@ -21,15 +19,20 @@ namespace QLSV.Models
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
         public DateTime Birth { get; set; }
-        //public List<Certificate> Certificates { get; set; }
-        public Employee(string Name,string room,string gender,string adress,DateTime Birth)
+        [StringLength(10, MinimumLength = 1)]
+        [Required]
+        public string Graduation_rank { get; set; }
+        [StringLength(10, MinimumLength = 1)]
+        [Required]
+        public string Education { get; set; }
+        [Display(Name = "Graduation date")]
+
+        [DataType(DataType.Date)]
+        public DateTime Graduation_date { get; set; }
+
+        public FresherDTO()
         {
-            this.Name =Name;
-            this.room = room;
-            this.gender = gender;
-            this.adress = adress;
-            this.Birth = Birth;
-            //List<Certificate> ListCertificate = new List<Certificate>();
+
         }
-    }
+    } 
 }
