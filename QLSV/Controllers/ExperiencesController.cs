@@ -66,7 +66,26 @@ namespace QLSV.Controllers
             }
             return View(experience);
         }
-
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddExperience(ExperienceDTO experienceDTO)
+        {
+            Experience experience = new Experience(experienceDTO);
+            if (ModelState.IsValid)
+            {
+                {
+                    var employee = _context.Set<Employee>();
+                    var e = experience.Employee;
+                    employee.Add(e);
+                    _context.SaveChanges();
+                    experience.EmployeeID = e.EmployeeId;
+                    var experiencedb = _context.Set<Experience>();
+                    experiencedb.Add(experience);
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            return View(experience);
+        }
         // GET: Experiences/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

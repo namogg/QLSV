@@ -8,6 +8,10 @@ namespace QLSV.Data
 {
     public class QLSVContext : DbContext
     {
+        public QLSVContext()
+        {
+        }
+
         public QLSVContext(DbContextOptions<QLSVContext> options)
             : base(options)
         {
@@ -19,5 +23,7 @@ namespace QLSV.Data
         public DbSet<QLSV.Models.Experience>? Experience { get; set; }
         public DbSet<QLSV.Models.Certificate>? Certificate { get; set; }
         public DbSet<QLSV.Models.FresherDTO> FresherDTO { get; set; }
+        public DbSet<QLSV.Models.ExperienceDTO> ExperienceDTO { get; set; }
+        public DbSet<QLSV.Models.InternDTO> InternDTO { get; set; }
     }
 }

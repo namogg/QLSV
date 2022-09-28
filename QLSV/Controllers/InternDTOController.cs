@@ -9,54 +9,53 @@ using QLSV.Data;
 using QLSV.Models;
 namespace QLSV.Controllers
 {
-    public class FresherDTOController : Controller
+    public class InternDTOController : Controller
     {
         private readonly QLSVContext _context;
 
-        public FresherDTOController(QLSVContext context)
+        public InternDTOController(QLSVContext context)
         {
             _context = context;
         }
-        // GET: FresherDTOController
+        // GET: InternDTOController
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: FresherDTOController/Details/5
+        // GET: InternDTOController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: FresherDTOController/Create
+        // GET: InternDTOController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: FresherDTOController/Create
+        // POST: InternDTOController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,room,gender,adress,Birth,Graduation_rank,Education,Graduation_date")] FresherDTO fresherDTO)
+        public async Task<IActionResult> Create([Bind("ID,Name,room,gender,adress,Birth,Majors,Semester,University_name")] InternDTO internDTO)
         {
-            Fresher fresher = new Fresher(fresherDTO);
             if (ModelState.IsValid)
             {
-                FreshersController FC = new FreshersController(_context);
-                FC.AddFresher(fresherDTO);
-                return RedirectToAction("Index","Employees");
+                InternsController IN = new InternsController(_context);
+                IN.AddIntern(internDTO);
+                return RedirectToAction("Index", "Employees");
             }
-            return View(fresher);
+            return View();
         }
 
-        // GET: FresherDTOController/Edit/5
+        // GET: InternDTOController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: FresherDTOController/Edit/5
+        // POST: InternDTOController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -71,13 +70,13 @@ namespace QLSV.Controllers
             }
         }
 
-        // GET: FresherDTOController/Delete/5
+        // GET: InternDTOController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: FresherDTOController/Delete/5
+        // POST: InternDTOController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

@@ -28,6 +28,7 @@ namespace QLSV.Controllers
         }
 
         // GET: Freshers/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Fresher == null)
@@ -64,6 +65,27 @@ namespace QLSV.Controllers
                 _context.Add(fresher);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+            }
+            return View(fresher);
+        }
+
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddFresher(FresherDTO fresherDTO)
+        {
+            Fresher fresher = new Fresher(fresherDTO);
+            if (ModelState.IsValid)
+            {
+                {   
+                    var employee = _context.Set<Employee>();
+                    var e = fresher.Employee;
+                    employee.Add(e);
+                    _context.SaveChanges();
+                    fresher.EmployeeID = e.EmployeeId;
+                    var freshers = _context.Set<Fresher>();
+                    freshers.Add(fresher);
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(fresher);
         }

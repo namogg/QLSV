@@ -45,11 +45,35 @@ namespace QLSV.Controllers
 
             var employee = await _context.Employee
                 .FirstOrDefaultAsync(m => m.EmployeeId == id);
+            
             if (employee == null)
             {
                 return NotFound();
             }
-
+            var fresher = await _context.Fresher
+                .FirstOrDefaultAsync(m => m.EmployeeID == id);
+            if(fresher != null)
+            {
+                FreshersController FC = new FreshersController(_context);
+                FC.Details(id);
+                return RedirectToAction("Details","Freshers", new { id = id });
+            }
+            var intern = await _context.Intern
+                .FirstOrDefaultAsync(m => m.EmployeeID == id);
+            if (intern != null)
+            {
+                InternsController FC = new InternsController(_context);
+                FC.Details(id);
+                return RedirectToAction("Details", "Interns", new { id = id });
+            }
+            var experience = await _context.Experience
+                .FirstOrDefaultAsync(m => m.EmployeeID == id);
+            if (experience != null)
+            {
+                ExperiencesController FC = new ExperiencesController(_context);
+                FC.Details(id);
+                return RedirectToAction("Details", "Experiences", new { id = id });
+            }
             return View(employee);
         }
 

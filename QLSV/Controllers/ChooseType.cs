@@ -15,11 +15,11 @@ namespace QLSV.Controllers
             }
             if (type == "Experience")
             {
-                return View();
+                return RedirectToAction("Create", "ExperienceDTO");
             }
             if (type == "Intern")
             {
-                return View();
+                return RedirectToAction("Create", "InternDTO");
             }
             return View();
         }

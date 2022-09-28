@@ -66,6 +66,21 @@ namespace QLSV.Controllers
             }
             return View(intern);
         }
+        [ValidateAntiForgeryToken]
+       public async Task<IActionResult> AddIntern(InternDTO internDTO)
+       {
+          Intern intern = new Intern(internDTO);
+                   var employee = _context.Set<Employee>();
+                   var e = intern.Employee;
+                   employee.Add(e);
+                   _context.SaveChanges();
+                   intern.EmployeeID = e.EmployeeId;
+                   var interndb = _context.Set<Intern>();
+                   interndb.Add(intern);
+                   _context.SaveChanges();
+                   return RedirectToAction(nameof(Index));
+           return View(intern);
+       }
 
         // GET: Interns/Edit/5
         public async Task<IActionResult> Edit(int? id)

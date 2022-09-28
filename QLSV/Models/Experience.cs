@@ -19,5 +19,15 @@ namespace QLSV.Models
         [ForeignKey("Employee")]
         public int EmployeeID { get; set; }
         public Employee Employee { get; set; }
+        public Experience()
+        {
+        }
+
+        public Experience(ExperienceDTO experienceDTO)
+        {
+            this.Employee = new Employee(experienceDTO.Name, experienceDTO.room, experienceDTO.gender, experienceDTO.adress, experienceDTO.Birth);
+            this.ExpInYear = experienceDTO.ExpInYear;
+            this.ProSkill = experienceDTO.ProSkill;
+        }
     }
 }
