@@ -30,6 +30,7 @@ namespace QLSV.Models
         [DataType(DataType.Date)]
         public DateTime Graduation_date { get; set; }
 
+        public List<Certificate> Certificates { get; set; }
         public FresherDTO()
         {
 

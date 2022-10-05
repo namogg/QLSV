@@ -14,5 +14,31 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
 }
+
+aside {
+    width: 50%;
+    float: right;
+    padding-right: 50px;
+}
+section {
+    width: 40%;
+    float: left;
+}
+footer{
+    margin-top: auto;
+}
+table {
+    counter-reset: rowNumber;
+}
+
+    table tr::before {
+        display: table-cell;
+        counter-increment: rowNumber;
+        content: counter(rowNumber) ".";
+        padding-right: 0.3em;
+        text-align: right;
+    }

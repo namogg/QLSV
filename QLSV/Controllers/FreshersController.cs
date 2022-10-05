@@ -22,9 +22,7 @@ namespace QLSV.Controllers
         // GET: Freshers
         public async Task<IActionResult> Index()
         {
-              return _context.Fresher != null ? 
-                          View(await _context.Fresher.ToListAsync()) :
-                          Problem("Entity set 'QLSVContext.Fresher'  is null.");
+            return RedirectToAction("Index", "Employees");
         }
 
         // GET: Freshers/Details/5
@@ -38,8 +36,10 @@ namespace QLSV.Controllers
 
             var fresher = await _context.Fresher
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
+            fresher.Employee = await _context.Employee
+                .FirstOrDefaultAsync(m => m.EmployeeId == fresher.EmployeeID);
             if (fresher == null)
-            {
+            {  
                 return NotFound();
             }
 
@@ -58,7 +58,7 @@ namespace QLSV.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Graduation_rank,Education,Graduation_date,EmployeeId,Name,room,gender,adress,Birth")] Fresher fresher)
-        {   
+        {
             //Fresher fresher = new Fresher(fresherDTO);
             if (ModelState.IsValid)
             {
@@ -75,7 +75,7 @@ namespace QLSV.Controllers
             Fresher fresher = new Fresher(fresherDTO);
             if (ModelState.IsValid)
             {
-                {   
+                {
                     var employee = _context.Set<Employee>();
                     var e = fresher.Employee;
                     employee.Add(e);
@@ -98,7 +98,9 @@ namespace QLSV.Controllers
                 return NotFound();
             }
 
-            var fresher = await _context.Fresher.FindAsync(id);
+            var fresher = await _context.Fresher.FirstOrDefaultAsync(m => m.EmployeeID == id);
+            fresher.Employee = await _context.Employee
+                .FirstOrDefaultAsync(m => m.EmployeeId == id);
             if (fresher == null)
             {
                 return NotFound();
@@ -110,18 +112,14 @@ namespace QLSV.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Graduation_rank,Education,Graduation_date,EmployeeId,Name,room,gender,adress,Birth")] Fresher fresher)
+        [ValidateAntiForgeryToken] 
+        public async Task<IActionResult> Edit(Fresher fresher)
         {
-            if (id != fresher.EmployeeID)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
                 {
+                    fresher.Employee.EmployeeId = fresher.EmployeeID;
                     _context.Update(fresher);
                     await _context.SaveChangesAsync();
                 }
@@ -151,6 +149,8 @@ namespace QLSV.Controllers
 
             var fresher = await _context.Fresher
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
+            fresher.Employee = await _context.Employee
+                .FirstOrDefaultAsync(m => m.EmployeeId == fresher.EmployeeID);
             if (fresher == null)
             {
                 return NotFound();
@@ -168,14 +168,14 @@ namespace QLSV.Controllers
             {
                 return Problem("Entity set 'QLSVContext.Fresher'  is null.");
             }
-            var fresher = await _context.Fresher.FindAsync(id);
-            if (fresher != null)
+            var employee = await _context.Employee.FindAsync(id);
+            if (employee != null)
             {
-                _context.Fresher.Remove(fresher);
+                _context.Employee.Remove(employee); 
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index","Employee");
         }
 
         private bool FresherExists(int id)

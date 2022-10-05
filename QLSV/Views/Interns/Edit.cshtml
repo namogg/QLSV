@@ -1,12 +1,42 @@
 ﻿@model QLSV.Models.Intern
 
+@{
+    ViewData["Title"] = "Edit";
+}
 <h4>Intern</h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="InternId" />
+            <input type="hidden" asp-for="EmployeeID" />
+            <div class="form-group">
+                <label asp-for="Employee.Name" class="control-label"></label>
+                <input asp-for="Employee.Name" class="form-control" />
+                <span asp-validation-for="Employee.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Employee.Room" class="control-label"></label>
+                <input asp-for="Employee.Room" class="form-control" />
+                <span asp-validation-for="Employee.Room" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Employee.Gender" class="control-label"></label>
+                <input asp-for="Employee.Gender" class="form-control" />
+                <span asp-validation-for="Employee.Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Employee.Adress" class="control-label"></label>
+                <input asp-for="Employee.Adress" class="form-control" />
+                <span asp-validation-for="Employee.Adress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Employee.Birth" class="control-label"></label>
+                <input asp-for="Employee.Birth" class="form-control" />
+                <span asp-validation-for="Employee.Birth" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Majors" class="control-label"></label>
                 <input asp-for="Majors" class="form-control" />
@@ -21,11 +51,6 @@
                 <label asp-for="University_name" class="control-label"></label>
                 <input asp-for="University_name" class="form-control" />
                 <span asp-validation-for="University_name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EmployeeID" class="control-label"></label>
-                <select asp-for="EmployeeID" class="form-control" asp-items="ViewBag.EmployeeID"></select>
-                <span asp-validation-for="EmployeeID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

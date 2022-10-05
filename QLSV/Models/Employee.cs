@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System;
 namespace QLSV.Models
 {
     public class Employee
@@ -11,25 +10,26 @@ namespace QLSV.Models
         [StringLength(60, MinimumLength = 1)]
         [Required]
         public string Name { get; set; }
-        public string room { get; set; }
+        public string Room { get; set; }
         [RegularExpression(@"^[F,M]")]
         [StringLength(1)]
         [Required]
-        public string gender { get; set; }
-        public string adress { get; set; }
+        public string Gender { get; set; }
+        public string Adress { get; set; }
 
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
         public DateTime Birth { get; set; }
-        //public List<Certificate> Certificates { get; set; }
+        public List<Certificate> Certificates { get; set; }
+        public Employee() { }
         public Employee(string Name,string room,string gender,string adress,DateTime Birth)
         {
             this.Name =Name;
-            this.room = room;
-            this.gender = gender;
-            this.adress = adress;
+            this.Room = room;
+            this.Gender = gender;
+            this.Adress = adress;
             this.Birth = Birth;
-            //List<Certificate> ListCertificate = new List<Certificate>();
+            List<Certificate> ListCertificate = new List<Certificate>();
         }
     }
 }

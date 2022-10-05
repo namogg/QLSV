@@ -16,6 +16,7 @@ namespace QLSV.Models
         public string Semester { get; set; }
         [StringLength(20, MinimumLength = 1)]
         [Required]
+        [Display(Name = "University Name")]
         public string University_name { get; set; }
         [ForeignKey("Employee")]
         public int EmployeeID { get; set; }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLSV.Data;
 using QLSV.Models;
+using PagedList;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace QLSV.Controllers
@@ -22,8 +23,18 @@ namespace QLSV.Controllers
         }
 
         // GET: Employees
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int? pageNumber, string currentFilter)
         {
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["CurrentSort"] = sortOrder;
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
             var employee = from m in _context.Employee
                          select m;
 
@@ -31,8 +42,12 @@ namespace QLSV.Controllers
             {
                 employee = employee.Where(s => s.Name!.Contains(searchString));
             }
-
-            return View(await employee.ToListAsync());
+            if (!String.IsNullOrEmpty(sortOrder))
+            {
+                employee = employee.OrderByDescending(s => s.Name);
+            }
+            int pageSize = 5;
+            return View(await PaginatedList<Employee>.CreateAsync(employee.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Employees/Details/5
@@ -107,12 +122,36 @@ namespace QLSV.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Employee.FindAsync(id);
-            if (movie == null)
+            var employee = await _context.Employee.FindAsync(id);
+            var fresher = await _context.Fresher
+                .FirstOrDefaultAsync(m => m.EmployeeID == id);
+            if (fresher != null)
+            {
+                FreshersController FC = new FreshersController(_context);
+                FC.Edit(id);
+                return RedirectToAction("Edit", "Freshers", new { id = id });
+            }
+            var intern = await _context.Intern
+                .FirstOrDefaultAsync(m => m.EmployeeID == id);
+            if (intern != null)
+            {
+                InternsController FC = new InternsController(_context);
+                FC.Edit(id);
+                return RedirectToAction("Edit", "Interns", new { id = id });
+            }
+            var experience = await _context.Experience
+                .FirstOrDefaultAsync(m => m.EmployeeID == id);
+            if (experience != null)
+            {
+                ExperiencesController FC = new ExperiencesController(_context);
+                FC.Edit(id);
+                return RedirectToAction("Edit", "Experiences", new { id = id });
+            }
+            if (employee == null)
             {
                 return NotFound();
             }
-            return View(movie);
+            return View(employee);
         }
         // POST: Employees/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -159,6 +198,30 @@ namespace QLSV.Controllers
 
             var employee = await _context.Employee
                 .FirstOrDefaultAsync(m => m.EmployeeId == id);
+            var fresher = await _context.Fresher
+                .FirstOrDefaultAsync(m => m.EmployeeID == id);
+            if (fresher != null)
+            {
+                FreshersController FC = new FreshersController(_context);
+                FC.Delete(id);
+                return RedirectToAction("Delete", "Freshers", new { id = id });
+            }
+            var intern = await _context.Intern
+                .FirstOrDefaultAsync(m => m.EmployeeID == id);
+            if (intern != null)
+            {
+                InternsController FC = new InternsController(_context);
+                FC.Delete(id);
+                return RedirectToAction("Delete", "Interns", new { id = id });
+            }
+            var experience = await _context.Experience
+                .FirstOrDefaultAsync(m => m.EmployeeID == id);
+            if (experience != null)
+            {
+                ExperiencesController FC = new ExperiencesController(_context);
+                FC.Delete(id);
+                return RedirectToAction("Delete", "Experiences", new { id = id });
+            }
             if (employee == null)
             {
                 return NotFound();
@@ -184,6 +247,14 @@ namespace QLSV.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Certificates(int id)
+        {
+            CertificatesController C = new CertificatesController(_context);
+             C.Index(id);
+            return RedirectToAction("Index", "Certificates",new{id = id}); ;
+           // return View();
         }
         private bool EmployeeExists(int id)
         {

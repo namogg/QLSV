@@ -22,9 +22,7 @@ namespace QLSV.Controllers
         // GET: Interns
         public async Task<IActionResult> Index()
         {
-              return _context.Intern != null ? 
-                          View(await _context.Intern.ToListAsync()) :
-                          Problem("Entity set 'QLSVContext.Intern'  is null.");
+            return RedirectToAction("Index","Employees");
         }
 
         // GET: Interns/Details/5
@@ -37,6 +35,8 @@ namespace QLSV.Controllers
 
             var intern = await _context.Intern
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
+            intern.Employee = await _context.Employee
+               .FirstOrDefaultAsync(m => m.EmployeeId == intern.EmployeeID);
             if (intern == null)
             {
                 return NotFound();
@@ -90,7 +90,9 @@ namespace QLSV.Controllers
                 return NotFound();
             }
 
-            var intern = await _context.Intern.FindAsync(id);
+            var intern = await _context.Intern.FirstOrDefaultAsync(m => m.EmployeeID == id);
+            intern.Employee = await _context.Employee
+               .FirstOrDefaultAsync(m => m.EmployeeId == id);
             if (intern == null)
             {
                 return NotFound();
@@ -103,17 +105,14 @@ namespace QLSV.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Majors,Semester,University_name,EmployeeId,Name,room,gender,adress,Birth")] Intern intern)
+        public async Task<IActionResult> Edit(Intern intern)
         {
-            if (id != intern.EmployeeID)
-            {
-                return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    intern.Employee.EmployeeId=intern.EmployeeID;
                     _context.Update(intern);
                     await _context.SaveChangesAsync();
                 }
@@ -143,6 +142,8 @@ namespace QLSV.Controllers
 
             var intern = await _context.Intern
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
+            intern.Employee = await _context.Employee
+               .FirstOrDefaultAsync(m => m.EmployeeId == intern.EmployeeID);
             if (intern == null)
             {
                 return NotFound();
@@ -160,14 +161,14 @@ namespace QLSV.Controllers
             {
                 return Problem("Entity set 'QLSVContext.Intern'  is null.");
             }
-            var intern = await _context.Intern.FindAsync(id);
-            if (intern != null)
+            var employee = await _context.Employee.FindAsync(id);
+            if (employee != null)
             {
-                _context.Intern.Remove(intern);
+                _context.Employee.Remove(employee);
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index","Employee");
         }
 
         private bool InternExists(int id)

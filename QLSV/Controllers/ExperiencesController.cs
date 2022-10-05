@@ -22,9 +22,7 @@ namespace QLSV.Controllers
         // GET: Experiences
         public async Task<IActionResult> Index()
         {
-              return _context.Experience != null ? 
-                          View(await _context.Experience.ToListAsync()) :
-                          Problem("Entity set 'QLSVContext.Experience'  is null.");
+            return RedirectToAction("Index", "Employees");
         }
 
         // GET: Experiences/Details/5
@@ -37,6 +35,8 @@ namespace QLSV.Controllers
 
             var experience = await _context.Experience
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
+            experience.Employee = await _context.Employee
+                .FirstOrDefaultAsync(m => m.EmployeeId == experience.EmployeeID);
             if (experience == null)
             {
                 return NotFound();
@@ -94,7 +94,9 @@ namespace QLSV.Controllers
                 return NotFound();
             }
 
-            var experience = await _context.Experience.FindAsync(id);
+            var experience = await _context.Experience.FirstOrDefaultAsync(m => m.EmployeeID == id);
+            experience.Employee = await _context.Employee
+                .FirstOrDefaultAsync(m => m.EmployeeId == id);
             if (experience == null)
             {
                 return NotFound();
@@ -107,17 +109,13 @@ namespace QLSV.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ExpInYear,ProSkill,EmployeeId,Name,room,gender,adress,Birth")] Experience experience)
+        public async Task<IActionResult> Edit(Experience experience)
         {
-            if (id != experience.EmployeeID)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
                 {
+                    experience.Employee.EmployeeId = experience.EmployeeID;
                     _context.Update(experience);
                     await _context.SaveChangesAsync();
                 }
@@ -147,6 +145,8 @@ namespace QLSV.Controllers
 
             var experience = await _context.Experience
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
+            experience.Employee = await _context.Employee
+                .FirstOrDefaultAsync(m => m.EmployeeId == experience.EmployeeID);
             if (experience == null)
             {
                 return NotFound();
@@ -164,10 +164,10 @@ namespace QLSV.Controllers
             {
                 return Problem("Entity set 'QLSVContext.Experience'  is null.");
             }
-            var experience = await _context.Experience.FindAsync(id);
-            if (experience != null)
+            var employee = await _context.Employee.FindAsync(id);
+            if (employee != null)
             {
-                _context.Experience.Remove(experience);
+                _context.Employee.Remove(employee);
             }
             
             await _context.SaveChangesAsync();

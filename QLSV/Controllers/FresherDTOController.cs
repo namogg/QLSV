@@ -41,13 +41,13 @@ namespace QLSV.Controllers
         public async Task<IActionResult> Create([Bind("ID,Name,room,gender,adress,Birth,Graduation_rank,Education,Graduation_date")] FresherDTO fresherDTO)
         {
             Fresher fresher = new Fresher(fresherDTO);
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                FreshersController FC = new FreshersController(_context);
-                FC.AddFresher(fresherDTO);
-                return RedirectToAction("Index","Employees");
+               return NotFound();
             }
-            return View(fresher);
+            FreshersController FC = new FreshersController(_context);
+            FC.AddFresher(fresherDTO);
+            return RedirectToAction("Index", "Employees");
         }
 
         // GET: FresherDTOController/Edit/5
@@ -59,11 +59,11 @@ namespace QLSV.Controllers
         // POST: FresherDTOController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,room,gender,adress,Birth,Graduation_rank,Education,Graduation_date")] FresherDTO fresherDTO)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction();
             }
             catch
             {

@@ -1,0 +1,68 @@
+﻿@model QLSV.Models.FresherDTO
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<table id="CertificateTable" class="table">
+    <thead>
+        <tr>
+            <th>Certificate Name</th>
+            <th>Certificate Rank</th>
+            <th>Graduation Date</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (var counter = 0; counter < 5; counter++)
+            {
+                <tr id="tablerow${counter}">
+
+                    <td>
+                        <input asp-for="Certificates[counter].CertificateName" class="form-control" />
+                        <span asp-validation-for="Certificates[counter].CertificateName" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <input asp-for="Certificates[counter].CertificateRank" class="form-control" />
+                        <span asp-validation-for="Certificates[counter].CertificateRank" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <input asp-for="Certificates[counter].GraduationDate" class="form-control" />
+                        <span asp-validation-for="Certificates[counter].GraduationDate" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" onclick="removeTr(0);">Delete</button>
+                    </td>
+                </tr>
+             }
+        </tbody>
+</table>
+<p>
+    <button id="add" type="button" class="btn btn-primary" onclick="add()">Add</button>
+</p>
+<script>
+    function InitialCreate() {
+        for (int i = 0; i < 5; i++) {
+
+        }
+    }
+    var counter = 1;
+    fuction add(){
+        if (counter < 5) {
+            document.getElementById("tablerow" + counter).style.display = 'none';
+        }
+        counter++
+    }
+    function removeTr(index) {
+            
+            if (counter > 1) {
+                document.getElementById("tablerow"+counter).style.display = 'none';
+                
+        }
+        counter--;
+            return false;
+        }
+</script>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

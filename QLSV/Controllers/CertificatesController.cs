@@ -20,13 +20,16 @@ namespace QLSV.Controllers
         }
 
         // GET: Certificates
-        public async Task<IActionResult> Index() => _context.Certificate != null ?
-                          View(await _context.Certificate.ToListAsync()) :
-                          Problem("Entity set 'QLSVContext.Certificate'  is null.");
-
-        private ObjectResult View(object p)
+        public async Task<IActionResult> Index(int? id)
         {
-            throw new NotImplementedException();
+            var certificates = from m in _context.Certificate
+                           select m;
+            if (id != null)
+            {
+                certificates = certificates.Where(s => s.EmployeeID == id);
+            }
+            
+            return View(await certificates.ToListAsync());
         }
 
         // GET: Certificates/Details/5
@@ -58,7 +61,7 @@ namespace QLSV.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CertificateID,CertificateName,CertificateRank,GraduationDate")] Certificate certificate)
+        public async Task<IActionResult> Create(Certificate certificate)
         {
             if (ModelState.IsValid)
             {
@@ -156,7 +159,6 @@ namespace QLSV.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
         private bool CertificateExists(int id)
         {
           return (_context.Certificate?.Any(e => e.CertificateID == id)).GetValueOrDefault();
