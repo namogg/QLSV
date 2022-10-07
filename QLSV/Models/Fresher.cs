@@ -38,6 +38,7 @@ namespace QLSV.Models
             this.Graduation_date = fresherDTO.Graduation_date;
             this.Graduation_rank = fresherDTO.Graduation_rank;
             this.Education = fresherDTO.Education;
+            this.Employee.Certificates= fresherDTO.Certificates;
         }
     }
 }

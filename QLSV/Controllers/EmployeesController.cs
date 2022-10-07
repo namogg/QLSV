@@ -249,12 +249,23 @@ namespace QLSV.Controllers
             return RedirectToAction(nameof(Index));
         }
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Certificates(int id)
+        public async Task<IActionResult> CreateCertificates(Employee employee,int id)
         {
-            CertificatesController C = new CertificatesController(_context);
-             C.Index(id);
-            return RedirectToAction("Index", "Certificates",new{id = id}); ;
-           // return View();
+            var employeeID = id;
+            var certificates = employee.Certificates;
+            foreach(var C in certificates)
+            {
+                var certificate = new Certificate
+                {
+                    EmployeeID = employeeID,
+                    CertificateName = C.CertificateName,
+                    CertificateRank = C.CertificateRank,
+                    GraduationDate = C.GraduationDate
+                };
+                await _context.AddAsync(certificate);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
         }
         private bool EmployeeExists(int id)
         {

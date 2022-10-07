@@ -7,7 +7,7 @@ namespace QLSV.ViewComponents
     public class CertificateCreateViewComponent : ViewComponent
     {
         public List<Certificate> certificates { get; private set; }
-        public IViewComponentResult Invoke(List<Certificate> certificates)
+        public IViewComponentResult Invoke()
         {
             return View();
         }

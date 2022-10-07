@@ -75,17 +75,32 @@ namespace QLSV.Controllers
             Fresher fresher = new Fresher(fresherDTO);
             if (ModelState.IsValid)
             {
+                //save Employee
+                try
                 {
-                    var employee = _context.Set<Employee>();
-                    var e = fresher.Employee;
-                    employee.Add(e);
+                    Employee employee = fresher.Employee;
+                    _context.Employee.Add(employee);
                     _context.SaveChanges();
-                    fresher.EmployeeID = e.EmployeeId;
-                    var freshers = _context.Set<Fresher>();
-                    freshers.Add(fresher);
+                }
+                catch (Exception ex) 
+                {
+                    fresher.EmployeeID = fresher.Employee.EmployeeId;
+                    _context.Fresher.Add(fresher);
                     _context.SaveChanges();
+                    //save Certificate
+                    var certificates = fresher.Employee.Certificates;
+                    foreach (var _Certificate in certificates)
+                    {
+                        _Certificate.EmployeeID = fresher.Employee.EmployeeId;
+                        _Certificate.Employee = fresher.Employee;
+                        _context.Certificate.Add(_Certificate);
+                        _context.SaveChanges();
+                    }
                     return RedirectToAction(nameof(Index));
                 }
+
+                //save Fresher
+                
             }
             return View(fresher);
         }

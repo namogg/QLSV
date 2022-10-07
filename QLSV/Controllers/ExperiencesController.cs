@@ -73,9 +73,9 @@ namespace QLSV.Controllers
             if (ModelState.IsValid)
             {
                 {
-                    var employee = _context.Set<Employee>();
+                   // var employee = _context.Set<Employee>();
                     var e = experience.Employee;
-                    employee.Add(e);
+                    _context.Employee.Add(e);
                     _context.SaveChanges();
                     experience.EmployeeID = e.EmployeeId;
                     var experiencedb = _context.Set<Experience>();

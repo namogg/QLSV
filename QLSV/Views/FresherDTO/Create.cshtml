@@ -2,7 +2,7 @@
 
 <h4>Fresher</h4>
 <hr />
-<section class="flex-wrap">
+<div class="flex-wrap">
     <div class="flex-wrap">
         <form asp-action="Create" asp-controller="FresherDTO" class="form-horizontal">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -46,6 +46,9 @@
                 <input asp-for="Graduation_date" class="form-control" />
                 <span asp-validation-for="Graduation_date" class="text-danger"></span>
             </div>
+            <aside>
+            @await Component.InvokeAsync("CertificateCreate")
+            </aside>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -53,9 +56,6 @@
         <div>
             <a asp-action="Index">Back to List</a>
         </div>
-</section>
-<aside>
-    @await Component.InvokeAsync("CertificateCreate")
-</aside>
+</div>
 
 

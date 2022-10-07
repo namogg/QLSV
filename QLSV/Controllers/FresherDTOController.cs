@@ -38,12 +38,11 @@ namespace QLSV.Controllers
         // POST: FresherDTOController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,room,gender,adress,Birth,Graduation_rank,Education,Graduation_date")] FresherDTO fresherDTO)
+        public async Task<IActionResult> Create(FresherDTO fresherDTO)
         {
-            Fresher fresher = new Fresher(fresherDTO);
-            if (!ModelState.IsValid)
+//            if (!ModelState.IsValid)
             {
-               return NotFound();
+//               return NotFound();
             }
             FreshersController FC = new FreshersController(_context);
             FC.AddFresher(fresherDTO);
