@@ -38,7 +38,7 @@ namespace QLSV.Controllers
         // POST: InternDTOController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,room,gender,adress,Birth,Majors,Semester,University_name")] InternDTO internDTO)
+        public async Task<IActionResult> Create(InternDTO internDTO)
         {
             if (ModelState.IsValid)
             {

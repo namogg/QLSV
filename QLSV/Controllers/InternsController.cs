@@ -70,15 +70,23 @@ namespace QLSV.Controllers
        public async Task<IActionResult> AddIntern(InternDTO internDTO)
        {
           Intern intern = new Intern(internDTO);
-                   var employee = _context.Set<Employee>();
-                   var e = intern.Employee;
-                   employee.Add(e);
-                   _context.SaveChanges();
-                   intern.EmployeeID = e.EmployeeId;
-                   var interndb = _context.Set<Intern>();
-                   interndb.Add(intern);
-                   _context.SaveChanges();
-                   return RedirectToAction(nameof(Index));
+          var employee = _context.Set<Employee>();
+          var e = intern.Employee;
+          employee.Add(e);
+          _context.SaveChanges();
+          intern.EmployeeID = e.EmployeeId;
+          var interndb = _context.Set<Intern>();
+          interndb.Add(intern);
+          _context.SaveChanges();
+          var certificates = intern.Employee.Certificates;
+          foreach (var _Certificate in certificates)
+            {
+                _Certificate.EmployeeID = intern.Employee.EmployeeId;
+                _Certificate.Employee = intern.Employee;
+                _context.Certificate.Add(_Certificate);
+                _context.SaveChanges();
+            }
+            return RedirectToAction(nameof(Index));
            return View(intern);
        }
 

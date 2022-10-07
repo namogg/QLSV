@@ -72,7 +72,7 @@ namespace QLSV.Controllers
             Experience experience = new Experience(experienceDTO);
             if (ModelState.IsValid)
             {
-                {
+                
                    // var employee = _context.Set<Employee>();
                     var e = experience.Employee;
                     _context.Employee.Add(e);
@@ -81,8 +81,16 @@ namespace QLSV.Controllers
                     var experiencedb = _context.Set<Experience>();
                     experiencedb.Add(experience);
                     _context.SaveChanges();
+                    var certificates = experience.Employee.Certificates;
+                    foreach (var _Certificate in certificates)
+                    {
+                        _Certificate.EmployeeID = experience.Employee.EmployeeId;
+                        _Certificate.Employee = experience.Employee;
+                        _context.Certificate.Add(_Certificate);
+                        _context.SaveChanges();
+                    }
                     return RedirectToAction(nameof(Index));
-                }
+                
             }
             return View(experience);
         }

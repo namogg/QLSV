@@ -27,7 +27,7 @@ namespace QLSV.Models
         [StringLength(20, MinimumLength = 1)]
         [Required]
         public string ProSkill { get; set; }
-
+        public List<Certificate> Certificates { get; set; }
         public ExperienceDTO()
         {
 

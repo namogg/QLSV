@@ -28,16 +28,15 @@ namespace QLSV.Controllers
         // POST: ExperienceDTOController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,room,gender,adress,Birth,ExpInYear,ProSkill")] ExperienceDTO experienceDTO)
+        public async Task<IActionResult> Create(ExperienceDTO experienceDTO)
         {
-            Experience experience = new Experience(experienceDTO);
-            if (ModelState.IsValid)
+//            if (ModelState.IsValid)
             {
                 ExperiencesController EX = new ExperiencesController(_context);
                 EX.AddExperience(experienceDTO);
                 return RedirectToAction("Index", "Employees");
             }
-            return View(experience);
+            return View();
         }
     }
 }

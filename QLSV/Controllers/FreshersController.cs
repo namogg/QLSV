@@ -75,15 +75,10 @@ namespace QLSV.Controllers
             Fresher fresher = new Fresher(fresherDTO);
             if (ModelState.IsValid)
             {
-                //save Employee
-                try
                 {
                     Employee employee = fresher.Employee;
                     _context.Employee.Add(employee);
                     _context.SaveChanges();
-                }
-                catch (Exception ex) 
-                {
                     fresher.EmployeeID = fresher.Employee.EmployeeId;
                     _context.Fresher.Add(fresher);
                     _context.SaveChanges();

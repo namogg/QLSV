@@ -28,6 +28,7 @@ namespace QLSV.Models
             this.Employee = new Employee(experienceDTO.Name, experienceDTO.room, experienceDTO.gender, experienceDTO.adress, experienceDTO.Birth);
             this.ExpInYear = experienceDTO.ExpInYear;
             this.ProSkill = experienceDTO.ProSkill;
+            this.Employee.Certificates = experienceDTO.Certificates;
         }
     }
 }
