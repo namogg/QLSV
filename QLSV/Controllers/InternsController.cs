@@ -78,16 +78,7 @@ namespace QLSV.Controllers
           var interndb = _context.Set<Intern>();
           interndb.Add(intern);
           _context.SaveChanges();
-          var certificates = intern.Employee.Certificates;
-          foreach (var _Certificate in certificates)
-            {
-                _Certificate.EmployeeID = intern.Employee.EmployeeId;
-                _Certificate.Employee = intern.Employee;
-                _context.Certificate.Add(_Certificate);
-                _context.SaveChanges();
-            }
-            return RedirectToAction(nameof(Index));
-           return View(intern);
+          return RedirectToAction(nameof(Index));
        }
 
         // GET: Interns/Edit/5
@@ -116,7 +107,7 @@ namespace QLSV.Controllers
         public async Task<IActionResult> Edit(Intern intern)
         {
 
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
             {
                 try
                 {
