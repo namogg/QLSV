@@ -28,7 +28,7 @@ namespace QLSV.Models
         public string Semester { get; set; }
         [StringLength(20, MinimumLength = 1)]
         [Required]
-        [Display(Name = "Date of Birth")]
+        [Display(Name = "University Name")]
         public string University_name { get; set; }
         public InternDTO()
         {

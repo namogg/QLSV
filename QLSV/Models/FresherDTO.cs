@@ -19,9 +19,10 @@ namespace QLSV.Models
         public string Gender { get; set; }
         public string Adress { get; set; }
 
-        [Display(Name = "Date of Birth")]
+        [Display(Name = "Date of birth")]
         [DataType(DataType.Date)]
         public DateTime Birth { get; set; }
+        [Display(Name = "Graduation rank")]
         [StringLength(10, MinimumLength = 1)]
         [Required]
         public string Graduation_rank { get; set; }
