@@ -1,0 +1,24 @@
+﻿@model QLSV.Models.Employee
+@{var sad = Model; }
+<table class="table">
+    <thead>
+        <tr>
+            <th>Certificate Name</th>
+            <th>Certificate Rank</th>
+            <th>Graduation Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Certificates.Count(); i++)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model => model.Certificates[i].CertificateName) </td>
+
+                <td>@Html.DisplayFor(model => model.Certificates[i].CertificateRank) </td>
+
+                <td>@Html.DisplayFor(model => model.Certificates[i].GraduationDate) </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

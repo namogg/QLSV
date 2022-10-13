@@ -61,6 +61,9 @@
         </dd>
     </dl>
 </div>
+<aside>
+    @await Component.InvokeAsync("CertificateDetail", new {employee=Model.Employee })
+</aside>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.EmployeeID">Edit</a> |
     <a asp-action="Index">Back to List</a>

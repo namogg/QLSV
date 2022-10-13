@@ -1,7 +1,8 @@
 ﻿@model QLSV.Models.Employee
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<table class="table" id="CertificateTable">
-    <thead>
+@{var sa = Model; }
+<table class="table" id="CertificateEditTable" >
+    <thead> 
         <tr>
             <th>Certificate Name</th>
             <th>Certificate Rank</th>
@@ -10,25 +11,25 @@
         </tr>
     </thead>
     <tbody>
-        @{
-            var count = 0;
-            <tr id="tablerow0">
-                <td>
-                    <input asp-for="Certificates[count].CertificateName" class="form-control" />
-                    <span asp-validation-for="Certificates[count].CertificateName" class="text-danger"></span>
-                </td>
-                <td>
-                    <input asp-for="Certificates[count].CertificateRank" class="form-control" />
-                    <span asp-validation-for="Certificates[count].CertificateRank" class="text-danger"></span>
-                </td>
-                <td>
-                    <input asp-for="Certificates[count].GraduationDate" class="form-control" />
-                    <span asp-validation-for="Certificates[count].GraduationDate" class="text-danger"></span>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-primary" onclick="removeTr(0);">Delete</button>
-                </td>
-            </tr>
+        @for (int count = 0; count < Model.Certificates.Count(); count++)
+        {
+        <tr> 
+            <td>
+                <input asp-for="Certificates[count].CertificateName" class="form-control" />
+                <span asp-validation-for="Certificates[count].CertificateName" class="text-danger"></span>
+            </td>
+            <td>
+                <input asp-for="Certificates[count].CertificateRank" class="form-control" />
+                <span asp-validation-for="Certificates[count].CertificateRank" class="text-danger"></span>
+            </td>
+            <td>
+                <input asp-for="Certificates[count].GraduationDate" class="form-control" />
+                <span asp-validation-for="Certificates[count].GraduationDate" class="text-danger"></span>
+            </td>
+            <td>
+                <input type="hidden" asp-for="Certificates[count].CertificateID" />
+            </td>
+        </tr>
         }
     </tbody>
 </table>
@@ -36,8 +37,8 @@
 <p>
     <button id="add" type="button" class="btn btn-primary">Add</button>
 </p>
-<script>
-    var counter = 1;
+<script>    
+    var counter = @Model.Certificates.Count();
     $(function add() {
         $('#add').click(function () {
             var tr = '<tr id="tablerow' + counter + '">';
@@ -46,7 +47,7 @@
             tr += '<td> <input class="form-control" type="date" data-val="true" data-val-required="The Amount field is required." id="Certificates_[' + counter + ']__GraduationDate" name="Certificates[' + counter + '].GraduationDate" value=""> </td>';
             tr += '<td> <button type="button" class="btn btn-primary" onclick="removeTr(' + counter + ');">Delete</button> </td>';
             tr += "</tr>";
-            $(tr).appendTo("#CertificateTable");
+            $(tr).appendTo("#CertificateEditTable");
             counter++;
             return false;
         });
@@ -59,3 +60,4 @@
         return false;
     }
 </script>
+

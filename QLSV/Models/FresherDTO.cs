@@ -12,12 +12,12 @@ namespace QLSV.Models
         [StringLength(60, MinimumLength = 1)]
         [Required]
         public string Name { get; set; }
-        public string room { get; set; }
+        public string Room { get; set; }
         [RegularExpression(@"^[F,M]")]
         [StringLength(1)]
         [Required]
-        public string gender { get; set; }
-        public string adress { get; set; }
+        public string Gender { get; set; }
+        public string Adress { get; set; }
 
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
@@ -32,7 +32,7 @@ namespace QLSV.Models
 
         [DataType(DataType.Date)]
         public DateTime Graduation_date { get; set; }
-
+        
         public List<Certificate> Certificates { get; set; }
         public FresherDTO()
         {

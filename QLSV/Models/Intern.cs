@@ -27,7 +27,7 @@ namespace QLSV.Models
         }
         public Intern(InternDTO internDTO)
         {
-            this.Employee = new Employee(internDTO.Name, internDTO.room, internDTO.gender, internDTO.adress, internDTO.Birth);
+            this.Employee = new Employee(internDTO.Name, internDTO.Room, internDTO.Gender, internDTO.Adress, internDTO.Birth);
             this.Majors = internDTO.Majors;
             this.Semester = internDTO.Semester;
             this.University_name = internDTO.University_name;

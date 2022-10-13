@@ -40,10 +40,6 @@ namespace QLSV.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(FresherDTO fresherDTO)
         {
-//            if (!ModelState.IsValid)
-            {
-//               return NotFound();
-            }
             FreshersController FC = new FreshersController(_context);
             FC.AddFresher(fresherDTO);
             return RedirectToAction("Index", "Employees");
@@ -58,7 +54,7 @@ namespace QLSV.Controllers
         // POST: FresherDTOController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,room,gender,adress,Birth,Graduation_rank,Education,Graduation_date")] FresherDTO fresherDTO)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Room,Gender,Adress,Birth,Graduation_rank,Education,Graduation_date")] FresherDTO fresherDTO)
         {
             try
             {

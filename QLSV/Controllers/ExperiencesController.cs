@@ -34,9 +34,9 @@ namespace QLSV.Controllers
             }
 
             var experience = await _context.Experience
+                .Include(Ex => Ex.Employee)
+                .Include(Ex => Ex.Employee.Certificates )
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
-            experience.Employee = await _context.Employee
-                .FirstOrDefaultAsync(m => m.EmployeeId == experience.EmployeeID);
             if (experience == null)
             {
                 return NotFound();
@@ -56,7 +56,7 @@ namespace QLSV.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ExpInYear,ProSkill,EmployeeId,Name,room,gender,adress,Birth")] Experience experience)
+        public async Task<IActionResult> Create([Bind("ExpInYear,ProSkill,EmployeeId,Name,Room,Gender,Adress,Birth")] Experience experience)
         {
             if (ModelState.IsValid)
             {
@@ -102,9 +102,10 @@ namespace QLSV.Controllers
                 return NotFound();
             }
 
-            var experience = await _context.Experience.FirstOrDefaultAsync(m => m.EmployeeID == id);
-            experience.Employee = await _context.Employee
-                .FirstOrDefaultAsync(m => m.EmployeeId == id);
+            var experience = await _context.Experience
+                .Include(Ex => Ex.Employee)
+                .Include(Ex => Ex.Employee.Certificates)
+                .FirstOrDefaultAsync(m => m.EmployeeID == id);
             if (experience == null)
             {
                 return NotFound();
@@ -117,13 +118,13 @@ namespace QLSV.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Experience experience)
+        public async Task<IActionResult> Edit(Experience experience,List<Certificate> Certificates)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
             {
                 try
-                {
-                    experience.Employee.EmployeeId = experience.EmployeeID;
+                {   
+                    experience.Employee.Certificates = Certificates;
                     _context.Update(experience);
                     await _context.SaveChangesAsync();
                 }
@@ -152,9 +153,9 @@ namespace QLSV.Controllers
             }
 
             var experience = await _context.Experience
-                .FirstOrDefaultAsync(m => m.EmployeeID == id);
-            experience.Employee = await _context.Employee
-                .FirstOrDefaultAsync(m => m.EmployeeId == experience.EmployeeID);
+                .Include(Ex => Ex.Employee)
+                .Include(Ex => Ex.Employee.Certificates)
+                .FirstOrDefaultAsync(m => m.EmployeeID == id);  
             if (experience == null)
             {
                 return NotFound();
@@ -179,7 +180,7 @@ namespace QLSV.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index","Employees");
         }
 
         private bool ExperienceExists(int id)

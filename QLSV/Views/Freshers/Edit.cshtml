@@ -14,6 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="EmployeeID" />
             <input type="hidden" asp-for="FresherID" />
+            <input type="hidden" asp-for="Employee.EmployeeId" />
             <div class="form-group">
                 <label asp-for="Employee.Name" class="control-label"></label>
                 <input asp-for="Employee.Name" class="form-control" />
@@ -54,6 +55,9 @@
                 <input asp-for="Graduation_date" class="form-control" />
                 <span asp-validation-for="Graduation_date" class="text-danger"></span>
             </div>
+            <aside>
+                @await Component.InvokeAsync("CertificateEdit", new { employee = Model.Employee })
+            </aside>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

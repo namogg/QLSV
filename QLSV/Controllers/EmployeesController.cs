@@ -103,7 +103,7 @@ namespace QLSV.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,Name,room,gender,adress,Birth")] Employee employee)
+        public async Task<IActionResult> Create([Bind("EmployeeId,Name,Room,Gender,Adress,Birth")] Employee employee)
         {
             if (ModelState.IsValid)
             {   
@@ -158,7 +158,7 @@ namespace QLSV.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("EmployeeId,Name,room,gender,adress,Birth")] Employee employee)
+        public async Task<IActionResult> Edit(int? id, [Bind("EmployeeId,Name,Room,Gender,Adress,Birth")] Employee employee)
         {
             if (id != employee.EmployeeId)
             {

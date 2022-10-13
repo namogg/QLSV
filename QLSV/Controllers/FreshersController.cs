@@ -35,9 +35,9 @@ namespace QLSV.Controllers
             }
 
             var fresher = await _context.Fresher
+                .Include(f => f.Employee)
+                .Include(f => f.Employee.Certificates)
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
-            fresher.Employee = await _context.Employee
-                .FirstOrDefaultAsync(m => m.EmployeeId == fresher.EmployeeID);
             if (fresher == null)
             {  
                 return NotFound();
@@ -57,7 +57,7 @@ namespace QLSV.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Graduation_rank,Education,Graduation_date,EmployeeId,Name,room,gender,adress,Birth")] Fresher fresher)
+        public async Task<IActionResult> Create([Bind("Graduation_rank,Education,Graduation_date,EmployeeId,Name,Room,Gender,Adress,Birth")] Fresher fresher)
         {
             //Fresher fresher = new Fresher(fresherDTO);
             if (ModelState.IsValid)
@@ -108,13 +108,15 @@ namespace QLSV.Controllers
                 return NotFound();
             }
 
-            var fresher = await _context.Fresher.FirstOrDefaultAsync(m => m.EmployeeID == id);
-            fresher.Employee = await _context.Employee
-                .FirstOrDefaultAsync(m => m.EmployeeId == id);
+            var fresher = await _context.Fresher
+                .Include(f => f.Employee)
+                .Include(f => f.Employee.Certificates)
+                .FirstOrDefaultAsync(m => m.EmployeeID == id);
             if (fresher == null)
             {
                 return NotFound();
             }
+            ViewBag.EmployeeID = fresher.EmployeeID;
             return View(fresher);
         }
 
@@ -123,13 +125,13 @@ namespace QLSV.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken] 
-        public async Task<IActionResult> Edit(Fresher fresher)
+        public async Task<IActionResult> Edit(Fresher fresher,List<Certificate> Certificates)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
             {
                 try
                 {
-                    fresher.Employee.EmployeeId = fresher.EmployeeID;
+                    fresher.Employee.Certificates = Certificates;
                     _context.Update(fresher);
                     await _context.SaveChangesAsync();
                 }
@@ -158,9 +160,9 @@ namespace QLSV.Controllers
             }
 
             var fresher = await _context.Fresher
+                .Include(f => f.Employee)
+                .Include(f => f.Employee.Certificates)
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
-            fresher.Employee = await _context.Employee
-                .FirstOrDefaultAsync(m => m.EmployeeId == fresher.EmployeeID);
             if (fresher == null)
             {
                 return NotFound();
@@ -185,7 +187,7 @@ namespace QLSV.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index","Employee");
+            return RedirectToAction("Index","Employees");
         }
 
         private bool FresherExists(int id)

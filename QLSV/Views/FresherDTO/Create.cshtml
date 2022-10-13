@@ -2,55 +2,58 @@
 
 <h4>Fresher</h4>
 <hr />
-<div class="flex-wrap">
-    <div class="flex-wrap">
-        <form asp-action="Create" asp-controller="FresherDTO" class="form-horizontal">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+<div>
+    <div class="row">
+        <form asp-action="Create" asp-controller="FresherDTO" class="row">
+            <div class="col-6">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Room" class="control-label"></label>
+                    <input asp-for="Room" class="form-control" />
+                    <span asp-validation-for="Room" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Gender" class="control-label"></label>
+                    <input asp-for="Gender" class="form-control" />
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Adress" class="control-label"></label>
+                    <input asp-for="Adress" class="form-control" />
+                    <span asp-validation-for="Adress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Birth" class="control-label"></label>
+                    <input asp-for="Birth" class="form-control" />
+                    <span asp-validation-for="Birth" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Graduation_rank" class="control-label"></label>
+                    <input asp-for="Graduation_rank" class="form-control" />
+                    <span asp-validation-for="Graduation_rank" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Education" class="control-label"></label>
+                    <input asp-for="Education" class="form-control" />
+                    <span asp-validation-for="Education" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Graduation_date" class="control-label"></label>
+                    <input asp-for="Graduation_date" class="form-control" />
+                    <span asp-validation-for="Graduation_date" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="room" class="control-label"></label>
-                <input asp-for="room" class="form-control" />
-                <span asp-validation-for="room" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="gender" class="control-label"></label>
-                <input asp-for="gender" class="form-control" />
-                <span asp-validation-for="gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="adress" class="control-label"></label>
-                <input asp-for="adress" class="form-control" />
-                <span asp-validation-for="adress" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Birth" class="control-label"></label>
-                <input asp-for="Birth" class="form-control" />
-                <span asp-validation-for="Birth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Graduation_rank" class="control-label"></label>
-                <input asp-for="Graduation_rank" class="form-control" />
-                <span asp-validation-for="Graduation_rank" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Education" class="control-label"></label>
-                <input asp-for="Education" class="form-control" />
-                <span asp-validation-for="Education" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Graduation_date" class="control-label"></label>
-                <input asp-for="Graduation_date" class="form-control" />
-                <span asp-validation-for="Graduation_date" class="text-danger"></span>
-            </div>
-            <aside>
-            @await Component.InvokeAsync("CertificateCreate")
-            </aside>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="col-6">
+                @await Component.InvokeAsync("CertificateCreate")
             </div>
         </form>
         <div>

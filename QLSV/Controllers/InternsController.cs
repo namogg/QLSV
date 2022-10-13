@@ -56,7 +56,7 @@ namespace QLSV.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Majors,Semester,University_name,EmployeeId,Name,room,gender,adress,Birth")] Intern intern)
+        public async Task<IActionResult> Create([Bind("Majors,Semester,University_name,EmployeeId,Name,Room,Gender,Adress,Birth")] Intern intern)
         {
             if (ModelState.IsValid)
             {
@@ -176,7 +176,7 @@ namespace QLSV.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index","Employee");
+            return RedirectToAction("Index","Employees");
         }
 
         private bool InternExists(int id)

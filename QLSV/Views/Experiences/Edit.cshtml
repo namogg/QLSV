@@ -9,51 +9,55 @@
 <h4>Experience</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ExperienceId" />
-            <input type="hidden" asp-for="EmployeeID" />
-            <div class="form-group">
-                <label asp-for="Employee.Name" class="control-label"></label>
-                <input asp-for="Employee.Name" class="form-control" />
-                <span asp-validation-for="Employee.Name" class="text-danger"></span>
+        <form asp-action="Edit" class="row">
+            <div class="col-6">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ExperienceId" />
+                <input type="hidden" asp-for="EmployeeID" />
+                <input type="hidden" asp-for="Employee.EmployeeId" />
+                <div class="form-group">
+                    <label asp-for="Employee.Name" class="control-label"></label>
+                    <input asp-for="Employee.Name" class="form-control" />
+                    <span asp-validation-for="Employee.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group" >
+                    <label asp-for="Employee.Room" class="control-label"></label>
+                    <input asp-for="Employee.Room" class="form-control" />
+                    <span asp-validation-for="Employee.Room" class="text-danger"></span>
+                </div>
+                <div class="form-group" >
+                    <label asp-for="Employee.Gender" class="control-label"></label>
+                    <input asp-for="Employee.Gender" class="form-control" />
+                    <span asp-validation-for="Employee.Gender" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Employee.Adress" class="control-label"></label>
+                    <input asp-for="Employee.Adress" class="form-control" />
+                    <span asp-validation-for="Employee.Adress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Employee.Birth" class="control-label"></label>
+                    <input asp-for="Employee.Birth" class="form-control" />
+                    <span asp-validation-for="Employee.Birth" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ExpInYear" class="control-label"></label>
+                    <input asp-for="ExpInYear" class="form-control" />
+                    <span asp-validation-for="ExpInYear" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ProSkill" class="control-label"></label>
+                    <input asp-for="ProSkill" class="form-control" />
+                    <span asp-validation-for="ProSkill" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Employee.Room" class="control-label"></label>
-                <input asp-for="Employee.Room" class="form-control" />
-                <span asp-validation-for="Employee.Room" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Employee.Gender" class="control-label"></label>
-                <input asp-for="Employee.Gender" class="form-control" />
-                <span asp-validation-for="Employee.Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Employee.Adress" class="control-label"></label>
-                <input asp-for="Employee.Adress" class="form-control" />
-                <span asp-validation-for="Employee.Adress" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Employee.Birth" class="control-label"></label>
-                <input asp-for="Employee.Birth" class="form-control" />
-                <span asp-validation-for="Employee.Birth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ExpInYear" class="control-label"></label>
-                <input asp-for="ExpInYear" class="form-control" />
-                <span asp-validation-for="ExpInYear" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProSkill" class="control-label"></label>
-                <input asp-for="ProSkill" class="form-control" />
-                <span asp-validation-for="ProSkill" class="text-danger"></span>
+            <div class="col-6">
+                @await Component.InvokeAsync("CertificateEdit", new { employee = Model.Employee })
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
-    </div>
 </div>
 
 <div>

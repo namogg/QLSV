@@ -11,54 +11,57 @@
     <h4>Fresher</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
+        <div class ="col-6"><dt >
             @Html.DisplayNameFor(model => model.Employee.Name)
         </dt>
-        <dd class="col-sm-10">
+        <dd >
             @Html.DisplayFor(model => model.Employee.Name)
         </dd>
-        <dt class="col-sm-2">
+        <dt>
             @Html.DisplayNameFor(model => model.Employee.Room)
         </dt>
-        <dd class="col-sm-10">
+        <dd >
             @Html.DisplayFor(model => model.Employee.Room)
         </dd>
-        <dt class="col-sm-2">
+        <dt >
             @Html.DisplayNameFor(model => model.Employee.Gender)
         </dt>
-        <dd class="col-sm-10">
+        <dd >
             @Html.DisplayFor(model => model.Employee.Gender)
         </dd>
-        <dt class="col-sm-2">
+        <dt>
             @Html.DisplayNameFor(model => model.Employee.Adress)
         </dt>
-        <dd class="col-sm-10">
+        <dd >
             @Html.DisplayFor(model => model.Employee.Adress)
         </dd>
-        <dt class="col-sm-2">
+        <dt>
             @Html.DisplayNameFor(model => model.Employee.Birth)
         </dt>
-        <dd class="col-sm-10">
+        <dd>
             @Html.DisplayFor(model => model.Employee.Birth)
         </dd>
-        <dt class="col-sm-2">
+        <dt>
             @Html.DisplayNameFor(model => model.Graduation_rank)
         </dt>
-        <dd class="col-sm-10">
+        <dd >
             @Html.DisplayFor(model => model.Graduation_rank)
         </dd>
-        <dt class="col-sm-2">
+        <dt >
             @Html.DisplayNameFor(model => model.Education)
         </dt>
-        <dd class="col-sm-10">
+        <dd>
             @Html.DisplayFor(model => model.Education)
         </dd>
-        <dt class="col-sm-2">
+        <dt>
             @Html.DisplayNameFor(model => model.Graduation_date)
         </dt>
-        <dd class="col-sm-10">
+        <dd>
             @Html.DisplayFor(model => model.Graduation_date)
-        </dd>
+        </dd></div>
+        <div class="col-6">
+            @await Component.InvokeAsync("CertificateDetail", new { employee = Model.Employee })
+        </div>
     </dl>
     
     <form asp-action="Delete">

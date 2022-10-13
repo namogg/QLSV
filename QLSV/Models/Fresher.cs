@@ -34,7 +34,7 @@ namespace QLSV.Models
         }
         public Fresher(FresherDTO fresherDTO)
         {
-            this.Employee = new Employee(fresherDTO.Name, fresherDTO.room, fresherDTO.gender, fresherDTO.adress, fresherDTO.Birth);
+            this.Employee = new Employee(fresherDTO.Name, fresherDTO.Room, fresherDTO.Gender, fresherDTO.Adress, fresherDTO.Birth);
             this.Graduation_date = fresherDTO.Graduation_date;
             this.Graduation_rank = fresherDTO.Graduation_rank;
             this.Education = fresherDTO.Education;

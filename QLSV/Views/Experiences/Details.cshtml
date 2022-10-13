@@ -10,50 +10,56 @@
     <h4>Experience</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
+        <div class="col-6">
+        <dt >
             @Html.DisplayNameFor(model => model.Employee.Name)
         </dt>
-        <dd class="col-sm-10">
+        <dd >
             @Html.DisplayFor(model => model.Employee.Name)
         </dd>
-        <dt class="col-sm-2">
+        <dt>
             @Html.DisplayNameFor(model => model.Employee.Room)
         </dt>
-        <dd class="col-sm-10">
+        <dd>
             @Html.DisplayFor(model => model.Employee.Room)
         </dd>
-        <dt class="col-sm-2">
+        <dt>
             @Html.DisplayNameFor(model => model.Employee.Gender)
         </dt>
-        <dd class="col-sm-10">
+        <dd>
             @Html.DisplayFor(model => model.Employee.Gender)
         </dd>
-        <dt class="col-sm-2">
+        <dt>
             @Html.DisplayNameFor(model => model.Employee.Adress)
         </dt>
-        <dd class="col-sm-10">
+        <dd>
             @Html.DisplayFor(model => model.Employee.Adress)
         </dd>
-        <dt class="col-sm-2">
+        <dt>
             @Html.DisplayNameFor(model => model.Employee.Birth)
         </dt>
-        <dd class="col-sm-10">
+        <dd>
             @Html.DisplayFor(model => model.Employee.Birth)
         </dd>
-        <dt class="col-sm-2">
+        <dt>
             @Html.DisplayNameFor(model => model.ExpInYear)
         </dt>
-        <dd class="col-sm-10">
+        <dd>
             @Html.DisplayFor(model => model.ExpInYear)
         </dd>
-        <dt class="col-sm-2">
+        <dt>
             @Html.DisplayNameFor(model => model.ProSkill)
         </dt>
-        <dd class="col-sm-10">
+        <dd>
             @Html.DisplayFor(model => model.ProSkill)
         </dd>
+        </div>
+        <div class="col-6">
+            @await Component.InvokeAsync("CertificateDetail", new { employee = Model.Employee })
+        </div>
     </dl>
 </div>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.EmployeeID">Edit</a> |
     <a asp-action="Index">Back to List</a>
