@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Delete";
+    var sadkjad = Model;
 }
 
 <h1>Delete</h1>
@@ -64,8 +65,8 @@
         </div>
     </dl>
     
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="FresherID" />
+    <form asp-action="DeleteFresher" asp-controller="Employees">
+        <input type="hidden" asp-for="EmployeeID" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

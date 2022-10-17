@@ -131,10 +131,10 @@ namespace QLSV.Migrations
                     b.Property<int>("EmployeeID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Graduation_date")
+                    b.Property<DateTime>("GraduationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Graduation_rank")
+                    b.Property<string>("GraduationRank")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");

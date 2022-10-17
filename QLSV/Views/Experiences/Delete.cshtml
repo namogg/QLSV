@@ -62,8 +62,8 @@
 </div>
     </dl>
 </div>
-<form asp-action="Delete">
-    <input type="hidden" asp-for="ExperienceId" />
+<form asp-action="DeleteExperience" asp-controller="Employees">
+    <input type="hidden" asp-for="EmployeeID" />
     <input type="submit" value="Delete" class="btn btn-danger" /> |
     <a asp-action="Index">Back to List</a>
 </form>

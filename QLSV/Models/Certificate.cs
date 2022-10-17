@@ -4,7 +4,9 @@ using System;
 namespace QLSV.Models
 {
     public class Certificate
-    {   
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CertificateID { get; set; }
         [Display(Name = "Certificate Name")]
         [StringLength(30, MinimumLength = 1)]

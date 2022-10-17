@@ -59,6 +59,7 @@ namespace QLSV.Controllers
             }
 
             var employee = await _context.Employee
+                .Include(c => c.Certificates)
                 .FirstOrDefaultAsync(m => m.EmployeeId == id);
             
             if (employee == null)
@@ -69,48 +70,19 @@ namespace QLSV.Controllers
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
             if(fresher != null)
             {
-                FreshersController FC = new FreshersController(_context);
-                FC.Details(id);
-                return RedirectToAction("Details","Freshers", new { id = id });
+                return View("Views/Freshers/Details.cshtml", fresher);
             }
             var intern = await _context.Intern
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
             if (intern != null)
             {
-                InternsController FC = new InternsController(_context);
-                FC.Details(id);
-                return RedirectToAction("Details", "Interns", new { id = id });
+                return View("Views/Interns/Details.cshtml", intern);
             }
             var experience = await _context.Experience
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
             if (experience != null)
             {
-                ExperiencesController FC = new ExperiencesController(_context);
-                FC.Details(id);
-                return RedirectToAction("Details", "Experiences", new { id = id });
-            }
-            return View(employee);
-        }
-
-        // GET: Employees/Create
-        public IActionResult Create()
-        {   
-            return View();
-        }
-
-        // POST: Employees/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,Name,Room,Gender,Adress,Birth")] Employee employee)
-        {
-            if (ModelState.IsValid)
-            {   
-
-                _context.Add(employee);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View("Views/Experiences/Details.cshtml", experience);
             }
             return View(employee);
         }
@@ -123,71 +95,85 @@ namespace QLSV.Controllers
             }
 
             var employee = await _context.Employee.FindAsync(id);
-            var fresher = await _context.Fresher
+            Fresher fresher = await _context.Fresher
+                .Include(m => m.Employee)
+                .Include(m => m.Employee.Certificates)
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
             if (fresher != null)
             {
-                FreshersController FC = new FreshersController(_context);
-                FC.Edit(id);
-                return RedirectToAction("Edit", "Freshers", new { id = id });
+                return View("Views/Freshers/Edit.cshtml", fresher);
             }
-            var intern = await _context.Intern
+            Intern intern = await _context.Intern
+                .Include(m => m.Employee)
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
             if (intern != null)
             {
-                InternsController FC = new InternsController(_context);
-                FC.Edit(id);
-                return RedirectToAction("Edit", "Interns", new { id = id });
+                return View("Views/Interns/Edit.cshtml", intern);
             }
-            var experience = await _context.Experience
+                Experience experience = await _context.Experience
+                .Include(m => m.Employee)
+                .Include(m => m.Employee.Certificates)
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
             if (experience != null)
             {
-                ExperiencesController FC = new ExperiencesController(_context);
-                FC.Edit(id);
-                return RedirectToAction("Edit", "Experiences", new { id = id });
-            }
+                    return View("Views/Experiences/Edit.cshtml", experience);
+                }
             if (employee == null)
             {
                 return NotFound();
             }
             return View(employee);
         }
-        // POST: Employees/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Experiences/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("EmployeeId,Name,Room,Gender,Adress,Birth")] Employee employee)
+        public async Task<IActionResult> EditExperience(Experience experience, List<Certificate> Certificates)
         {
-            if (id != employee.EmployeeId)
+            try
             {
-                return NotFound();
-
+                experience.Employee.Certificates = Certificates;
+                _context.Update(experience);
+                await _context.SaveChangesAsync();
             }
-            if (ModelState.IsValid)
+            catch (DbUpdateConcurrencyException)
             {
-                try
-                {
-                    _context.Update(employee);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!EmployeeExists(employee.EmployeeId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                    throw;
             }
-            return View(employee);
+            return RedirectToAction(nameof(Index));
         }
-
+        // POST: Experiences/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditIntern(Intern intern)
+        {
+            try
+            {   
+                _context.Update(intern);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        // POST: Experiences/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditFresher(Fresher fresher, List<Certificate> Certificates)
+        {
+            try
+            {
+                fresher.Employee.Certificates = Certificates;
+                _context.Update(fresher);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+            return RedirectToAction(nameof(Index));
+        }
         // GET: Employees/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -198,29 +184,28 @@ namespace QLSV.Controllers
 
             var employee = await _context.Employee
                 .FirstOrDefaultAsync(m => m.EmployeeId == id);
-            var fresher = await _context.Fresher
+            Fresher fresher = await _context.Fresher
+                .Include(m => m.Employee)
+                .Include(m => m.Employee.Certificates)
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
             if (fresher != null)
             {
-                FreshersController FC = new FreshersController(_context);
-                FC.Delete(id);
-                return RedirectToAction("Delete", "Freshers", new { id = id });
+                return View("Views/Freshers/Delete.cshtml",fresher);
             }
-            var intern = await _context.Intern
+            Intern intern = await _context.Intern
+                .Include(m => m.Employee)
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
             if (intern != null)
             {
-                InternsController FC = new InternsController(_context);
-                FC.Delete(id);
-                return RedirectToAction("Delete", "Interns", new { id = id });
+                return View("Views/Interns/Delete.cshtml",intern);
             }
-            var experience = await _context.Experience
+            Experience experience = await _context.Experience
+                .Include(m => m.Employee)
+                .Include(m => m.Employee.Certificates)
                 .FirstOrDefaultAsync(m => m.EmployeeID == id);
             if (experience != null)
             {
-                ExperiencesController FC = new ExperiencesController(_context);
-                FC.Delete(id);
-                return RedirectToAction("Delete", "Experiences", new { id = id });
+                return View("Views/Experiences/Delete.cshtml",experience);
             }
             if (employee == null)
             {
@@ -229,24 +214,59 @@ namespace QLSV.Controllers
 
             return View(employee);
         }
-
-        // POST: Employees/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Experiences/Delete/5
+        [HttpPost, ActionName("DeleteExperience")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteExperienceConfirmed(int EmployeeID)
         {
-            if (_context.Employee == null)
+            if (_context.Experience == null)
             {
-                return Problem("Entity set 'QLSVContext.Employee'  is null.");
+                return Problem("Entity set 'QLSVContext.Experience'  is null.");
             }
-            var employee = await _context.Employee.FindAsync(id);
+            var employee = await _context.Employee.FindAsync(EmployeeID);
             if (employee != null)
             {
                 _context.Employee.Remove(employee);
             }
-            
+
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Employees");
+        }
+        // POST: Freshers/Delete/5
+        [HttpPost, ActionName("DeleteFresher")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteFresherConfirmed(int EmployeeID)
+        {
+            if (_context.Fresher == null)
+            {
+                return Problem("Entity set 'QLSVContext.Fresher'  is null.");
+            }
+            var employee = await _context.Employee.FindAsync(EmployeeID);
+            if (employee != null)
+            {
+                _context.Employee.Remove(employee);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Employees");
+        }
+        // POST: Interns/Delete/5
+        [HttpPost, ActionName("DeleteIntern")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteInternConfirmed(int EmployeeID)
+        {
+            if (_context.Intern == null)
+            {
+                return Problem("Entity set 'QLSVContext.Intern'  is null.");
+            }
+            var employee = await _context.Employee.FindAsync(EmployeeID);
+            if (employee != null)
+            {
+                _context.Employee.Remove(employee);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Employees");
         }
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateCertificates(Employee employee,int id)
@@ -271,9 +291,77 @@ namespace QLSV.Controllers
         {
           return (_context.Employee?.Any(e => e.EmployeeId == id)).GetValueOrDefault();
         }
-        public IActionResult Choose()
+        // POST: ExperienceDTOController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateExperience(ExperienceDTO experienceDTO)
         {
-            return RedirectToAction("Index","ChooseType");
+          Experience experience = new Experience(experienceDTO);
+            if (ModelState.IsValid)
+            {
+                var e = experience.Employee;
+                _context.Employee.Add(e);
+                _context.SaveChanges();
+                experience.EmployeeID = e.EmployeeId;
+                var experiencedb = _context.Set<Experience>();
+                experiencedb.Add(experience);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index", "Employees");
+        }
+        // POST: ExperienceDTOController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateIntern(InternDTO internDTO)
+        {
+            Intern intern = new Intern(internDTO);
+            {
+                _context.Employee.Add(intern.Employee);
+                _context.SaveChanges();
+                intern.EmployeeID = intern.Employee.EmployeeId;
+                var Interndb = _context.Set<Intern>();
+                Interndb.Add(intern);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index", "Employees");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateFresher(FresherDTO fresherDTO)
+        {
+            Fresher fresher = new Fresher(fresherDTO);
+            Employee employee = fresher.Employee;
+            _context.Employee.Add(employee);
+            _context.SaveChanges();
+            fresher.EmployeeID = fresher.Employee.EmployeeId;
+            _context.Fresher.Add(fresher);
+            _context.SaveChanges();
+            //save Certificate
+             return RedirectToAction("Index");
+        }
+        //EmployeeType
+        [HttpGet]
+        public ActionResult Type()
+        {
+            return View("Views/ChooseType/Index.cshtml");
+        }
+
+        [HttpPost]
+        public ActionResult Type(string type)
+        {
+            if (type == "Fresher")
+            {
+                return View("Views/FresherDTO/Create.cshtml");
+            }
+            if (type == "Experience")
+            {
+                return View("Views/ExperienceDTO/Create.cshtml");
+            }
+            if (type == "Intern")
+            {
+                return View("Views/InternDTO/Create.cshtml");
+            }
+            return View();
         }
     }
 }

@@ -8,10 +8,11 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="EditIntern" asp-controller="Employees">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="InternId" />
             <input type="hidden" asp-for="EmployeeID" />
+            <input type="hidden" asp-for="Employee.EmployeeId" />
             <div class="form-group">
                 <label asp-for="Employee.Name" class="control-label"></label>
                 <input asp-for="Employee.Name" class="form-control" />
