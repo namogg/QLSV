@@ -214,50 +214,14 @@ namespace QLSV.Controllers
 
             return View(employee);
         }
-        // POST: Experiences/Delete/5
-        [HttpPost, ActionName("DeleteExperience")]
+        // POST: /Delete/5
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteExperienceConfirmed(int EmployeeID)
+        public async Task<IActionResult> DeleteConfirmed(int EmployeeID)
         {
             if (_context.Experience == null)
             {
                 return Problem("Entity set 'QLSVContext.Experience'  is null.");
-            }
-            var employee = await _context.Employee.FindAsync(EmployeeID);
-            if (employee != null)
-            {
-                _context.Employee.Remove(employee);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Employees");
-        }
-        // POST: Freshers/Delete/5
-        [HttpPost, ActionName("DeleteFresher")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteFresherConfirmed(int EmployeeID)
-        {
-            if (_context.Fresher == null)
-            {
-                return Problem("Entity set 'QLSVContext.Fresher'  is null.");
-            }
-            var employee = await _context.Employee.FindAsync(EmployeeID);
-            if (employee != null)
-            {
-                _context.Employee.Remove(employee);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Employees");
-        }
-        // POST: Interns/Delete/5
-        [HttpPost, ActionName("DeleteIntern")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteInternConfirmed(int EmployeeID)
-        {
-            if (_context.Intern == null)
-            {
-                return Problem("Entity set 'QLSVContext.Intern'  is null.");
             }
             var employee = await _context.Employee.FindAsync(EmployeeID);
             if (employee != null)
@@ -338,6 +302,14 @@ namespace QLSV.Controllers
             _context.SaveChanges();
             //save Certificate
              return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(FresherDTO fresherDTO, InternDTO internDTO, ExperienceDTO experienceDTO)
+        {
+            
+            return View();
         }
         //EmployeeType
         [HttpGet]
