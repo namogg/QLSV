@@ -303,14 +303,6 @@ namespace QLSV.Controllers
             //save Certificate
              return RedirectToAction("Index");
         }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(FresherDTO fresherDTO, InternDTO internDTO, ExperienceDTO experienceDTO)
-        {
-            
-            return View();
-        }
         //EmployeeType
         [HttpGet]
         public ActionResult Type()
